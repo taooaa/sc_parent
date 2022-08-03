@@ -2,6 +2,7 @@ package com.tao.eduservice.service;
 
 import com.tao.eduservice.pojo.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.tao.eduservice.pojo.vo.CourseInfoVo;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface EduCourseService extends IService<EduCourse> {
 
+    String saveCourseInfo(CourseInfoVo courseInfoVo);
 }
