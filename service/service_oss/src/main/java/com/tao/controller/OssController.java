@@ -3,6 +3,7 @@ package com.tao.controller;
 import com.tao.commonutils.R;
 import com.tao.service.OssService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import javax.jws.Oneway;
 
 @RestController
 @RequestMapping("/eduoss/fileoss")
+@CrossOrigin
 public class OssController {
 
     @Autowired
