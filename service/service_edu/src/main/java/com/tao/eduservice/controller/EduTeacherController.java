@@ -68,7 +68,7 @@ public class EduTeacherController {
 
     //条件查询带分页
     @PostMapping("pageTeacherCondition/{current}/{limit}")
-    public R pageTeacherCondition(@PathVariable long current , @PathVariable(required = false) long limit ,@RequestBody TeacherQuery teacherQuery){
+    public R pageTeacherCondition(@PathVariable long current , @PathVariable long limit ,@RequestBody(required = false) TeacherQuery teacherQuery){
         Page<EduTeacher> page = new Page<>(current,limit);
         QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
 
