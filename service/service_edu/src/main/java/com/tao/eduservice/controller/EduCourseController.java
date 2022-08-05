@@ -94,5 +94,12 @@ public class EduCourseController {
 
     }
 
+    //删除课程
+    @DeleteMapping("{courseId}")
+    public R deleteCourse(@PathVariable String courseId){
+        eduCourseService.removeCourse(courseId);
+        return R.ok();
+    }
+
 }
 

@@ -5,9 +5,11 @@ import com.tao.eduservice.mapper.EduCourseMapper;
 import com.tao.eduservice.pojo.EduCourseDescription;
 import com.tao.eduservice.pojo.vo.CourseInfoVo;
 import com.tao.eduservice.pojo.vo.CoursePublishVo;
+import com.tao.eduservice.service.EduChapterService;
 import com.tao.eduservice.service.EduCourseDescriptionService;
 import com.tao.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tao.eduservice.service.EduVideoService;
 import com.tao.serviceBase.execeptionHandler.MyException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     private EduCourseDescriptionService eduCourseDescriptionService;
+    @Autowired
+    private EduVideoService eduVideoService;
+    @Autowired
+    private EduCourseService eduCourseService;
+    @Autowired
+    private EduChapterService eduChapterService;
 
     @Override
     @Transactional
@@ -88,4 +96,21 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         CoursePublishVo publishCourseInfo = baseMapper.getPublishCourseInfo(id);
         return publishCourseInfo;
     }
+
+    @Override
+    @Transactional
+    public void removeCourse(String courseId) {
+        //1.根据课程id删除小节
+        eduVideoService.removeVideoByCourseId(courseId);
+        //2.根据课程id删除章节
+        eduChapterService.removeChapterByCourseId(courseId);
+        //3.根据课程id删除描述
+        eduCourseDescriptionService.removeById(courseId);
+        //4.根据课程id删除课程本身
+        int i = baseMapper.deleteById(courseId);
+        if(i == 0) {
+            throw new MyException(20001,"删除失败");
+        }
+    }
+
 }
