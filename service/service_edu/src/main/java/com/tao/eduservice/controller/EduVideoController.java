@@ -2,10 +2,12 @@ package com.tao.eduservice.controller;
 
 
 import com.tao.commonutils.R;
+import com.tao.eduservice.client.VodClient;
 import com.tao.eduservice.pojo.EduChapter;
 import com.tao.eduservice.pojo.EduVideo;
 import com.tao.eduservice.service.EduVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 public class EduVideoController {
     @Autowired
     private EduVideoService eduVideoService;
+    @Autowired
+    private VodClient vodClient;
 
     //添加小节
     @PostMapping("addVideo")
@@ -33,6 +37,14 @@ public class EduVideoController {
     //删除小节
     @DeleteMapping("{id}")
     public R deleteVideo(@PathVariable String id){
+        //根据小节id得到视频id
+        EduVideo eduVideo = eduVideoService.getById(id);
+        String videoSourceId = eduVideo.getVideoSourceId();
+
+        if(!StringUtils.isEmpty(videoSourceId)){
+            //根据视频远程调用vod删除视频
+            vodClient.removeVideo(videoSourceId);
+        }
         eduVideoService.removeById(id);
         return R.ok();
     }
