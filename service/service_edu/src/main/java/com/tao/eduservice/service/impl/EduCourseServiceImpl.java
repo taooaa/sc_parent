@@ -1,5 +1,6 @@
 package com.tao.eduservice.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tao.eduservice.pojo.EduCourse;
 import com.tao.eduservice.mapper.EduCourseMapper;
 import com.tao.eduservice.pojo.EduCourseDescription;
@@ -13,8 +14,12 @@ import com.tao.eduservice.service.EduVideoService;
 import com.tao.serviceBase.execeptionHandler.MyException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -111,6 +116,16 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         if(i == 0) {
             throw new MyException(20001,"删除失败");
         }
+    }
+
+    @Override
+    @Cacheable(key = "'selectCourse'",value = "course")
+    public List<EduCourse> listCourse() {
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("id");
+        wrapper.last("limit 8");
+        List<EduCourse> list = eduCourseService.list(wrapper);
+        return list;
     }
 
 }
