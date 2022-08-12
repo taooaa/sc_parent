@@ -2,6 +2,7 @@ package com.tao.eduservice.mapper;
 
 import com.tao.eduservice.pojo.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.tao.eduservice.pojo.frontvo.CourseWebVo;
 import com.tao.eduservice.pojo.vo.CoursePublishVo;
 
 /**
@@ -14,6 +15,8 @@ import com.tao.eduservice.pojo.vo.CoursePublishVo;
  */
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
 
-        public CoursePublishVo getPublishCourseInfo(String courseId);
+    public CoursePublishVo getPublishCourseInfo(String courseId);
 
+    CourseWebVo getBaseCourseInfo(String courseId);
 }
+

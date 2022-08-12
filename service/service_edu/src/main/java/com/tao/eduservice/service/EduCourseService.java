@@ -1,11 +1,15 @@
 package com.tao.eduservice.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tao.eduservice.pojo.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.tao.eduservice.pojo.frontvo.CourseFrontVo;
+import com.tao.eduservice.pojo.frontvo.CourseWebVo;
 import com.tao.eduservice.pojo.vo.CourseInfoVo;
 import com.tao.eduservice.pojo.vo.CoursePublishVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,5 +37,10 @@ public interface EduCourseService extends IService<EduCourse> {
     void removeCourse(String courseId);
 
     List<EduCourse> listCourse();
+
+    //条件查询课程分页
+    Map<String, Object> getCourseFrontList(Page<EduCourse> pageCourse, CourseFrontVo courseFrontVo);
+
+    CourseWebVo getBaseCourseInfo(String courseId);
 
 }
