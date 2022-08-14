@@ -2,6 +2,7 @@ package com.tao.eduservice.controller.front;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tao.commonutils.R;
+import com.tao.commonutils.vo.CourseWebVoOrder;
 import com.tao.eduservice.pojo.EduCourse;
 import com.tao.eduservice.pojo.EduTeacher;
 import com.tao.eduservice.pojo.chapter.ChapterVo;
@@ -10,6 +11,7 @@ import com.tao.eduservice.pojo.frontvo.CourseWebVo;
 import com.tao.eduservice.service.EduChapterService;
 import com.tao.eduservice.service.EduCourseService;
 import com.tao.eduservice.service.EduTeacherService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +49,14 @@ public class CourseFrontController {
         List<ChapterVo> chapterVideoList = chapterService.getChapterVideoByCourseId(courseId);
 
         return R.ok().data("courseWebVo",courseWebVo).data("chapterVideoList",chapterVideoList);
+    }
+
+    //根据课程id查询信息
+    @PostMapping("getCourseInfoOrder/{id}")
+    public CourseWebVoOrder getCourseInfoOrder(@PathVariable String id){
+        CourseWebVo baseCourseInfo = courseService.getBaseCourseInfo(id);
+        CourseWebVoOrder courseWebVoOrder = new CourseWebVoOrder();
+        BeanUtils.copyProperties(baseCourseInfo,courseWebVoOrder);
+        return courseWebVoOrder;
     }
 }
