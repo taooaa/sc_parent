@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface UcenterClient {
     //根据用户id查询用户信息
     @PostMapping("/educenter/member/getInfoUc/{id}")
-    public UcenterMemberVo getInfo(@PathVariable String id);
+    public UcenterMemberVo getInfo(@PathVariable("id") String id);
 }
