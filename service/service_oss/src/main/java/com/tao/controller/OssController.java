@@ -13,7 +13,6 @@ import javax.jws.Oneway;
 
 @RestController
 @RequestMapping("/eduoss/fileoss")
-@CrossOrigin
 public class OssController {
 
     @Autowired
